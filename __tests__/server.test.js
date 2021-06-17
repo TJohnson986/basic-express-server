@@ -1,8 +1,8 @@
 'use strict';
 
 const supertest = require('supertest');
-const server = require('../server.js');
-const request = supertest(server.app);
+const server = require('../server.js')
+const request = supertest(server);
 
 describe('API Server', () => {
 
@@ -12,9 +12,9 @@ describe('API Server', () => {
   })
 
   it('handles errors', async () => {
-    const response = await request.get('/bad');
+    const response = await request.get('/person');
     expect(response.status).toEqual(500);
-    expect(response.body.route).toEqual('/bad');
+    expect(response.body.message).toEqual('SERVER ERROR: No name on query');
   })
 
   it('/ works', async () => {
@@ -23,16 +23,10 @@ describe('API Server', () => {
     expect(response.text).toEqual('Hello World');
   })
 
-  it('/data works', async () => {
-    const response = await request.get('/data');
+  it('/person works', async () => {
+    const response = await request.get('/person?name=test');
     expect(response.status).toEqual(200);
     expect(typeof response.body).toEqual('object');
-  })
-
-  it('stamper middleware works', async () => {
-    const response = await request.get('/data');
-    expect(response.status).toEqual(200);
-    expect(response.body.time).toBeDefined();
   })
 
 });

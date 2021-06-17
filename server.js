@@ -13,7 +13,7 @@ app.use(logger);
 
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello from the express method route')
+  res.status(200).send('Hello World')
 });
 
 app.get('/person', userValidation, (req, res) => {
